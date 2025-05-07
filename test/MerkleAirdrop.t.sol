@@ -28,11 +28,10 @@ contract MerkleAirdropTest is Test, ZkSyncChainChecker {
     @param userPrivKey is needed for the digital signatures
      */
     function setUp() public {
-        if(!isZkSyncChain()){
+        if (!isZkSyncChain()) {
             DeployMerkleAirdrop deployer = new DeployMerkleAirdrop();
             (merkle, token) = deployer.run();
-        }
-        else{
+        } else {
             token = new Token();
             merkle = new MerkleAirdrop(ROOT, token);
             token.mint(token.owner(), AMOUNT_TO_SEND);
@@ -48,7 +47,7 @@ contract MerkleAirdropTest is Test, ZkSyncChainChecker {
 
         // sign a message
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(userPrivKey, digest);
-        
+
         //gasPayer is like the airdrop giver who pay the gas and force the user to claim
         // But in this case the force is enjoyable to the user
         vm.prank(gasPayer);
